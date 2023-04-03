@@ -28,8 +28,10 @@
 
 the result of the code above is as follows:
 
-> this is a print message!
-> Code interpretation suspended. Type 1 to continue, or -1 to expel.
-> 1
-> (4) WARN: this is a warn message!
-> Code interpretation expelled.
+
+
+    this is a print message!
+    Code interpretation suspended. Type 1 to continue, or -1 to expel.
+    1
+    (4) WARN: this is a warn message!
+    Code interpretation expelled.
