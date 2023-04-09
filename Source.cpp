@@ -19,7 +19,7 @@
 
 int lineNum = 0;
 const int MAX_LINE_LENGTH = 1024;
-
+extern int funcIndex;
 int main(int argc, char* argv[])
 {
     if (!argv[1]) return -1;
@@ -31,7 +31,6 @@ int main(int argc, char* argv[])
 
     int result = 1;
     bool isFunc = false;
-    std::string recentFunc = "";
 
     auto start = std::chrono::high_resolution_clock::now();
     while (file.getline(line, MAX_LINE_LENGTH))
@@ -39,7 +38,6 @@ int main(int argc, char* argv[])
         lineNum++;
         if (removeSpaces(line) == "end") {
             isFunc = false;
-            recentFunc = "";
             continue;
         }
 
@@ -48,7 +46,7 @@ int main(int argc, char* argv[])
         }
 
         if (isFunc == true) {
-            addToFunc(line, recentFunc);
+            addToFunc(line);
             continue;
         }
         else {
@@ -58,8 +56,8 @@ int main(int argc, char* argv[])
         if (result == -1 || result == -2) break;
 
         if (result == 2) {
-            recentFunc = line;
             isFunc = true;
+            funcIndex++;
         }
     }
 
