@@ -9,7 +9,7 @@ extern int lineNum;
 
 std::vector<std::pair<std::string, double>> numVariables;
 std::vector<std::pair<std::string, std::string>> stringVariables;
-std::vector<std::vector<std::string>> funcStorage;
+extern std::vector<std::vector<std::string>> funcStorage;
 
 int PrintToken(std::string line, std::string token, size_t pos)
 {
@@ -36,7 +36,7 @@ int PrintToken(std::string line, std::string token, size_t pos)
             return 1;
         }
     }
-    
+
     return error();
 }
 
@@ -45,12 +45,12 @@ int WarnToken(std::string line, std::string token, size_t pos)
     std::cout << "(" + std::to_string(lineNum) + ") WARN: ";
     PrintToken(line, token, pos);
 
-	return 1;
+    return 1;
 }
 
 int ExpelToken(std::string line, std::string token, size_t pos)
 {
-	return -2;
+    return -2;
 }
 
 int SuspendToken(std::string line, std::string token, size_t pos)
@@ -139,6 +139,7 @@ int funcToken(std::string line, std::string token, size_t pos)
 }
 
 extern std::map<std::string, int (*)(std::string, std::string, size_t)> functionMap;
+extern int funcIndex;
 int callFunc(std::string line, std::string token, size_t pos)
 {
     size_t open = line.find('(');
@@ -159,13 +160,12 @@ int callFunc(std::string line, std::string token, size_t pos)
         if (func[0] == sub.substr(0, sub.length() - 1)) {
             for (int i = 1; i < func.size(); i++) {
                 std::string strLine = func[i];
+
                 for (const auto& functionPair : functionMap) {
                     const std::string& new_token = functionPair.first;
 
                     size_t new_pos = strLine.find(new_token);
-                    if (new_pos != std::string::npos) {
-                        functionPair.second(strLine, new_token, new_pos);
-                    }
+                    functionPair.second(strLine, new_token, new_pos);
                 }
             }
             return 1;
