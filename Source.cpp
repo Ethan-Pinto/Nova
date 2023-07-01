@@ -4,7 +4,6 @@
 #include <chrono>
 
 #include "ProcessLine.h"
-#include "FuncHandler.h"
 
 /*
     RETURN VALUE MEANINGS
@@ -14,12 +13,15 @@
     * 0 = neutral (neither error or success)
     * -1 = error
     * -2 = expel
-    * 
+    *
 */
 
 int lineNum = 0;
 const int MAX_LINE_LENGTH = 1024;
-extern int funcIndex;
+
+std::vector<std::vector<std::string>> funcStorage = {};
+
+int funcIndex = -1;
 int main(int argc, char* argv[])
 {
     if (!argv[1]) return -1;
@@ -46,7 +48,7 @@ int main(int argc, char* argv[])
         }
 
         if (isFunc == true) {
-            addToFunc(line);
+            funcStorage[funcIndex].push_back(line);
             continue;
         }
         else {
